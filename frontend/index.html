@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lung Cancer Risk Prediction</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <div class="icon">🫁</div>
+            <h1>Lung Cancer Risk Prediction</h1>
+            <p>AI-powered risk assessment using a Random Forest machine learning model</p>
+        </header>
+
+        <form id="predictionForm">
+
+            <!-- Personal Information -->
+            <section class="card">
+                <h2>👤 Personal Information</h2>
+
+                <div class="grid">
+
+                    <div class="field">
+                        <label>Gender</label>
+                        <select id="GENDER" required>
+                            <option value="">Select gender</option>
+                            <option value="1">Male</option>
+                            <option value="0">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Age</label>
+                        <input type="number" id="AGE" min="1" max="120"
+                               placeholder="Enter age" required>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- Lifestyle -->
+            <section class="card">
+                <h2>🚬 Lifestyle & History</h2>
+
+                <div class="grid">
+
+                    <div class="field">
+                        <label>Smoking</label>
+                        <select id="SMOKING" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Alcohol Consumption</label>
+                        <select id="ALCOHOL_CONSUMING" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Yellow Fingers</label>
+                        <select id="YELLOW_FINGERS" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Chronic Disease</label>
+                        <select id="CHRONIC_DISEASE" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Peer Pressure</label>
+                        <select id="PEER_PRESSURE" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Anxiety</label>
+                        <select id="ANXIETY" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- Symptoms -->
+            <section class="card">
+                <h2>🫁 Symptoms</h2>
+
+                <div class="grid">
+
+                    <div class="field">
+                        <label>Fatigue</label>
+                        <select id="FATIGUE" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Allergy</label>
+                        <select id="ALLERGY" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Wheezing</label>
+                        <select id="WHEEZING" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Coughing</label>
+                        <select id="COUGHING" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Shortness of Breath</label>
+                        <select id="SHORTNESS_OF_BREATH" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Swallowing Difficulty</label>
+                        <select id="SWALLOWING_DIFFICULTY" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Chest Pain</label>
+                        <select id="CHEST_PAIN" required>
+                            <option value="">Select</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <button type="submit" id="predictBtn">
+                🔍 Predict Lung Cancer Risk
+            </button>
+
+        </form>
+
+
+        <!-- Loading -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Analyzing patient data...</p>
+        </div>
+
+
+        <!-- Result -->
+       
+<section id="resultCard" class="result-card hidden">
+
+    <div class="result-header">
+        <div class="result-icon">🫁</div>
+
+        <div>
+            <span class="result-label">AI RISK ASSESSMENT</span>
+            <h2 id="resultTitle">Prediction Result</h2>
+        </div>
+    </div>
+
+    <div class="risk-display">
+
+        <div class="risk-circle">
+            <div class="risk-circle-inner">
+                <span id="riskPercentage">0%</span>
+                <small>Risk Score</small>
+            </div>
+        </div>
+
+        <div class="risk-summary">
+            <span class="summary-label">Predicted Risk</span>
+            <h3 id="riskStatus">Assessment Complete</h3>
+            <p>
+                Based on the information provided and the trained
+                Random Forest model.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="probability-section">
+
+        <h3>Prediction Probability</h3>
+
+        <div class="probability-row">
+            <div class="probability-info">
+                <span>🫁 Lung Cancer</span>
+                <strong id="cancerProbability">0%</strong>
+            </div>
+
+            <div class="progress-track">
+                <div id="cancerBar" class="progress-fill"></div>
+            </div>
+        </div>
+
+
+        <div class="probability-row">
+            <div class="probability-info">
+                <span>✓ No Lung Cancer</span>
+                <strong id="noCancerProbability">0%</strong>
+            </div>
+
+            <div class="progress-track">
+                <div id="noCancerBar" class="progress-fill"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="assessment-note">
+
+        <div class="note-icon">ℹ️</div>
+
+        <div>
+            <strong>Important Information</strong>
+
+             <p id="disclaimer">
+            This result is an ML-based risk prediction generated from the information entered.
+            It is not a medical diagnosis and should not be used as a substitute for
+            professional medical evaluation.
+        </p>
+        </div>
+
+    </div>
+
+
+    <div class="result-actions">
+
+        <button type="button" class="print-btn" onclick="printReport()">
+            🖨️ Print Report
+        </button>
+
+        <button type="button" class="reset-btn" onclick="resetForm()">
+            ↻ New Assessment
+        </button>
+
+    </div>
+
+
+        </section>
+
+        <footer>
+            <p>⚠️ This tool provides an ML-based risk prediction and is not a medical diagnosis.</p>
+        </footer>
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
